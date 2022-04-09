@@ -1,4 +1,5 @@
 import React from "react";
+// import 'dotenv/config'
 import { GoogleMap, LoadScript, Polygon } from "@react-google-maps/api";
 
 const containerStyle = {
@@ -34,8 +35,10 @@ function PlotMap() {
     console.log("polygon: ", polygon);
   };
 
+  // console.log(process.env)
+
   return (
-    <LoadScript googleMapsApiKey="AIzaSyA00OVCytOS2w9Zl3K7uZZFGAYUPJqXVVQ!">
+    <LoadScript googleMapsApiKey={process.env.GAPI_KEY}>
       <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>
         <Polygon onLoad={onLoad} paths={paths} options={options} />
       </GoogleMap>
