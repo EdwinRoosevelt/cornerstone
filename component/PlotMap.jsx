@@ -1,25 +1,25 @@
 import React from "react";
-import { useEffect } from "react";
 import { GoogleMap, LoadScript, Polygon } from "@react-google-maps/api";
 
 const containerStyle = {
-  width: "600px",
-  height: "600px",
+  width: "100%",
+  height: "400px",
 };
 
-function Plot() {
-  const center = { lat: 32.321, lng: -64.757 };
+function PlotMap() {
+  const center = { lat: 24.886, lng: -70.268 };
 
   const paths = [
     { lat: 25.774, lng: -80.19 },
     { lat: 18.466, lng: -66.118 },
     { lat: 32.321, lng: -64.757 },
+    { lat: 42.321, lng: -75.757 },
     { lat: 25.774, lng: -80.19 },
   ];
 
   const options = {
     fillColor: "lightblue",
-    fillOpacity: 0.5,
+    fillOpacity: 1,
     strokeColor: "red",
     strokeOpacity: 1,
     strokeWeight: 2,
@@ -35,14 +35,12 @@ function Plot() {
   };
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyA00OVCytOS2w9Zl3K7uZZFGAYUPJqXVVQ">
+    <LoadScript googleMapsApiKey="AIzaSyA00OVCytOS2w9Zl3K7uZZFGAYUPJqXVVQ!">
       <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>
-        {/* Child components, such as markers, info windows, etc. */}
-        <></>
         <Polygon onLoad={onLoad} paths={paths} options={options} />
       </GoogleMap>
     </LoadScript>
   );
 }
 
-export default Plot;
+export default PlotMap;
