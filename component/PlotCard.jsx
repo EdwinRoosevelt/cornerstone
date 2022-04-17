@@ -9,7 +9,6 @@ function PlotCard(props) {
     <>
       <div className="container mt-5">
         <h1>#97841234</h1>
-        {process.env.GAPI_KEY}
         <div className="container bg-light">
           <div className="row">
             <div className="col-md-5 p-3">
