@@ -1,19 +1,15 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-describe("Greeter", function () {
-  it("Should return the new greeting once it's changed", async function () {
-    const Greeter = await ethers.getContractFactory("Greeter");
-    const greeter = await Greeter.deploy("Hello, world!");
-    await greeter.deployed();
+describe("PlotManager", function () {
+  it("Should create a plot", async function () {
+    const PlotManager = await ethers.getContractFactory("PlotManager");
+    const plotManager = await PlotManager.deploy();
+    await plotManager.deployed();
 
-    expect(await greeter.greet()).to.equal("Hello, world!");
+    await plotManager.createPlot({lat:1, lng:2}, 1, [9], [9]);
+    const plot = await plotManager.getAllPlots();
 
-    const setGreetingTx = await greeter.setGreeting("Hola, mundo!");
-
-    // wait until the transaction is mined
-    await setGreetingTx.wait();
-
-    expect(await greeter.greet()).to.equal("Hola, mundo!");
+    expect(plot[0].centroid).to.equal((1, 2));
   });
 });
