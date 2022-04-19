@@ -2,10 +2,13 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
+import { useSelector } from "react-redux";
+
 import PlotCard from '../component/PlotCard';
 // import 'dotenv/config'
 
 export default function Home() {
+  const { address, isLoggedIn } = useSelector((state) => state.user);
   return (
     <div className={styles.container}>
       <Head>
@@ -15,11 +18,15 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">CornerStone!</a>
+        {isLoggedIn && (
+          <div className="">
+            <p class="h5 mb-3">{`Hey ${address}`}</p>
 
-        </h1>
-
+            <h1 className={styles.title}>
+              Welcome to <a href="https://nextjs.org">CornerStone!</a>
+            </h1>
+          </div>
+        )}
         {/* <PlotCard /> */}
       </main>
     </div>

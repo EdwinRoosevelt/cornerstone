@@ -1,9 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { local } from 'web3modal';
 
-const initialState = {
+let initialState = {
   isLoggedIn: false,  
   address: 0,
 }
+
+
+
 
 export const userSlice = createSlice({
   name: "user",
@@ -12,10 +16,12 @@ export const userSlice = createSlice({
     login: (state, action) => {
       state.address = action.payload;
       state.isLoggedIn = true;
+      localStorage.setItem('userAddress', action.payload)
     },
 
     logout: (state) => {
       state.isLoggedIn = false;
+      localStorage.removeItem('userAddress')
     }
 
   },

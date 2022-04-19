@@ -38,7 +38,7 @@ function PlotMap() {
   // console.log(process.env)
 
   return (
-    <LoadScript googleMapsApiKey="as{process.env.GMAP_API_KEY}">
+    <LoadScript googleMapsApiKey={`${process.env.GMAP_API_KEY}`}>
       <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>
         <Polygon onLoad={onLoad} paths={paths} options={options} />
       </GoogleMap>
