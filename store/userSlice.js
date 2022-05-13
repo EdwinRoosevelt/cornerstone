@@ -1,13 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { local } from 'web3modal';
 
 let initialState = {
   isLoggedIn: false,  
   address: 0,
 }
 
-
-
+if (typeof window !== "undefined") {
+  if (localStorage.getItem("userAddress")) {
+    initialState = {
+      isLoggedIn: true,
+      address: localStorage['userAddress']
+    }
+  }
+}
 
 export const userSlice = createSlice({
   name: "user",

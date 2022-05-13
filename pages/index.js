@@ -20,11 +20,21 @@ export default function Home() {
       <main className={styles.main}>
         {isLoggedIn && (
           <div className="">
-            <p class="h5 mb-3">{`Hey ${address}`}</p>
+            <p className="h5 mb-3">{`Hey ${address}`}</p>
 
             <h1 className={styles.title}>
               Welcome to <a href="https://nextjs.org">CornerStone!</a>
             </h1>
+          </div>
+        )}
+        {!isLoggedIn && (
+          <div className="">
+            <p className="h5 mb-3"></p>
+
+            <h1 className={styles.title}>
+              Welcome to <a href="https://nextjs.org">CornerStone!</a>
+            </h1>
+            <p className="h5 mb-3">Kindly Login to view / add your plots!</p>
           </div>
         )}
         {/* <PlotCard /> */}

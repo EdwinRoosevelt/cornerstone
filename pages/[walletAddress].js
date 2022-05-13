@@ -1,10 +1,14 @@
 import React from 'react';
 import Head from "next/head";
+import { ethers } from 'ethers';
 
 import { useSelector } from 'react-redux';
 import { useRouter } from "next/router";
 
 import PlotCard from '../component/PlotCard';
+
+import { contractAddress } from '../config';
+import PlotManager from '../artifacts/contracts/PlotManager.sol/PlotManager.json'
 
 const data = [
   {
@@ -36,7 +40,7 @@ const data = [
 function UserPlots() {
     const router = useRouter()
     const {address, isLoggedIn} = useSelector(state => state.user)
-    const { addressUrl } = router.query
+    const { walletAddress } = router.query
 
   return (
     <div>
@@ -45,7 +49,7 @@ function UserPlots() {
       </Head>
       {isLoggedIn && (
         <div className="container">
-          <p className="h5 mt-5">Hey, {address}</p>
+          <p className="h5 mt-5">Plots of {walletAddress}</p>
           {data.map((plot) => {
             return <PlotCard data={plot} key={plot.id} />;
           })}
@@ -61,5 +65,18 @@ function UserPlots() {
     </div>
   );
 }
+
+// export async function getServerSideprops() {
+//   let provider = new ethers.providers.JsonRpcProvider()
+
+//   const contract = new ethers.Contract(contractAddress, PlotManager.abi, provider)
+//   const data = await contract.fetchPlots(walletAddress);
+
+//   return {
+//     props: {
+//       plots: JSON.parse(JSON.stringify(data))
+//     }
+//   }
+// }
 
 export default UserPlots

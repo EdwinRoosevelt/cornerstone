@@ -4,7 +4,7 @@ import Head from "next/head";
 import { useSelector } from "react-redux";
 import EditablePlotCard from '../component/EditablePlotCard';
 
-function addplot() {
+function Addplot() {
   const { address, isLoggedIn } = useSelector((state) => state.user);
 
   return (
@@ -30,4 +30,4 @@ function addplot() {
   );
 }
 
-export default addplot
+export default Addplot

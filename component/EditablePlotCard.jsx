@@ -4,19 +4,46 @@ function EditablePlotCard(props) {
   const {initialOwnerName, initialLocation, isPlotNew} = props;
   const [ownerName, setOwnerName] = useState("Edwin Roosevelt")
   const [cityName, setCityName] = useState("Vellore")
-  const [cornerLocations, setCornerLocations] = useState([])
+  const [cornerCoordinates, setCornerCoordinates] = useState([
+    { lat: undefined, long: undefined },
+  ]);
 
-  // function onChangeHandler() {
+  function editCornerCoordinates(lat, long, curIndex) {
+    const newCoord = {lat, long}
+    setCornerCoordinates(
+      cornerCoordinates
+        .slice(0, curIndex)
+        .concat(newCoord)
+        .concat(cornerCoordinates.slice(curIndex+1, cornerCoordinates.length))
+    );
+  }
 
-  // }
+  function removeCornerCoordinate(index) {
+    setCornerCoordinates(
+      cornerCoordinates
+        .slice(0, index)
+        .concat(cornerCoordinates.slice(index + 1, cornerCoordinates.length))
+    );
+  }
+
+  function createPlot() {
+    const plot = {ownerName, cityName, cornerCoordinates}
+    console.log(plot)
+  }
 
   return (
     <div>
-      <p className="h5 text-center mt-5">
-        Plots you add will be sent for verification before getting added!
-      </p>
-      <div className="container mt-5">
-        <h1>id</h1>
+      <h1 className="my-5">REGISTER NEW PLOT</h1>
+      <div className="card">
+        <div className="card-header">NOTE</div>
+        <div className="card-body">
+          <p className="card-text">
+            Plots will be sent for verification before added!
+          </p>
+        </div>
+      </div>
+
+      <div className="container mt-5 p-0">
         <div className="container bg-light">
           <div className="row">
             <div className="col-md-5 p-3">{/* <PlotMap /> */}</div>
@@ -33,7 +60,7 @@ function EditablePlotCard(props) {
                       {/* <p className="fs-5 mb-0">ownerName</p> */}
                       <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id="ownerName"
                         value={ownerName}
                         onChange={(target) => setOwnerName(target.value)}
@@ -53,7 +80,8 @@ function EditablePlotCard(props) {
                     <div>
                       <input
                         type="text"
-                        class="form-control"
+                        placeholder='e.g. Chennai'
+                        className="form-control"
                         id="ownerName"
                         value={cityName}
                         onChange={(target) => setCityName(target.value)}
@@ -73,54 +101,87 @@ function EditablePlotCard(props) {
                   <div className="d-flex gap-2 w-100 justify-content-between">
                     <div>
                       {/* <p className="mb-0 fs-5 mb-2">Corners</p> */}
-                      {/* {cornerCoordinates.map((corner) => {
+                      {cornerCoordinates.map((corner, index) => {
                         return (
-                          <p className="opacity-50 mb-0">
-                            Lat: {corner.lat}, Lon: {corner.long}
-                          </p>
+                          <div className="input-group mb-3" key={index}>
+                            <span className="input-group-text">Lat</span>
+                            <input
+                              type="number"
+                              step="any"
+                              placeholder="e.g. 12.397290"
+                              className="form-control"
+                              id="cornerLat"
+                              value={corner.lat}
+                              onChange={(target) =>
+                                editCornerCoordinates(
+                                  target.target.value,
+                                  `${corner.long}`,
+                                  index
+                                )
+                              }
+                            />
+                            <span className="input-group-text">Long</span>
+                            <input
+                              type="number"
+                              step="any"
+                              placeholder="e.g. 12.397290"
+                              className="form-control"
+                              value={corner.long}
+                              onChange={(target) =>
+                                editCornerCoordinates(
+                                  `${corner.lat}`,
+                                  target.target.value,
+                                  index
+                                )
+                              }
+                            />
+                            {index === 0 && (
+                              <button
+                                className="btn btn-danger px-2 disabled"
+                                onClick={() => removeCornerCoordinate(index)}
+                              >
+                                <i className="bi bi-trash3"></i>
+                              </button>
+                            )}
+                            {index > 0 && (
+                              <button
+                                className="btn btn-danger px-2"
+                                onClick={() => removeCornerCoordinate(index)}
+                              >
+                                <i className="bi bi-trash3"></i>
+                              </button>
+                            )}
+                          </div>
                         );
-                      })} */}
-                      <div class="input-group">
-                        <span class="input-group-text">Lat</span>
-                        <input
-                          type="text"
-                          aria-label="First name"
-                          class="form-control"
-                        />
-                        <span class="input-group-text">Long</span>
-                        <input
-                          type="text"
-                          aria-label="Last name"
-                          class="form-control"
-                        />
+                      })}
+
+                      <div className="d-grid gap-2">
+                        <button
+                          className="btn btn-success px-2"
+                          onClick={() =>
+                            setCornerCoordinates(
+                              cornerCoordinates.concat({
+                                lat: undefined,
+                                long: undefined,
+                              })
+                            )
+                          }
+                        >
+                          <i className="bi bi-plus"></i>
+                        </button>
                       </div>
                     </div>
                     <small className="opacity-50 text-nowrap">Corners</small>
                   </div>
                 </div>
               </div>
-
-              {/* <div className="input-group mb-3">
-                <span className="input-group-text" id="basic-addon1">
-                  <i
-                    className="bi bi-person-fill"
-                    style={{ fontSize: "1.5rem" }}
-                  ></i>
-                </span>
-                <input
-                  type="text"
-                  readOnly
-                  className="form-control"
-                  placeholder="Owner Name"
-                  aria-label="ownername"
-                  aria-describedby="basic-addon1"
-                  value="Edwin Roosevelt"
-                />
-              </div> */}
             </div>
           </div>
         </div>
-        <button className="btn-primary px-4 py-2 m-3">Create</button>
+
+        <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button className="btn btn-success px-4 py-2 mt-5" onClick={createPlot}>Create</button>
+        </div>
       </div>
     </div>
   );

@@ -14,15 +14,6 @@ function Header() {
   const address = useSelector((state) => state.user.address)
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
 
-  useEffect(() => {
-    console.log("hi")
-    if (typeof window !== "undefined") {
-      if (localStorage.getItem("userAddress")) {
-        dispatch(login(localStorage["userAddress"]));
-      }
-    }
-  }, [])
-
   async function getWeb3Modal() {
     const web3Modal = new Web3Modal({
       cacheProvider: false,
